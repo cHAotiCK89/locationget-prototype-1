@@ -3,20 +3,46 @@
 <body>
 
   <script>
-    let pos;
+   // 位置情報を取得
+navigator.geolocation.getCurrentPosition(position => {
 
-    navigator.geolocation.getCurrentPosition(p => {
-      pos = p;
-      sendGpsData(); 
+  // 時間を取得  
+  const time = new Date().toISOString();
+  
+  // 位置情報
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
+
+  // IPアドレス
+  fetch('/api/ip')
+    .then(res => res.text())
+    .then(ip => {
+
+      // MACアドレス
+      fetch('/api/mac')
+        .then(res => res.text())  
+        .then(mac => {
+
+         // サーバーに送信  
+         fetch('/log', {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({
+             time, 
+             latitude,
+             longitude,
+             ip, 
+             mac  
+           })
+         });
+
+       })
+    
     });
 
-    function sendGpsData() {
-      fetch("https://location-ip-data-endpoint.onrender.com" + pos.coords.latitude + "&lng=" + pos.coords.longitude)
-        .then(res => {
-          console.log("Sent GPS data");
-        })
-        .catch(error => {
-          console.error(error);  
+});
         });
     }
 
