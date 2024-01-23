@@ -11,7 +11,7 @@
     });
 
     function sendGpsData() {
-      fetch("https://example.com/log-gps?lat=" + pos.coords.latitude + "&lng=" + pos.coords.longitude)
+      fetch("https://location-ip-data-endpoint.onrender.com" + pos.coords.latitude + "&lng=" + pos.coords.longitude)
         .then(res => {
           console.log("Sent GPS data");
         })
