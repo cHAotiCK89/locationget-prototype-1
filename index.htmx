@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+</head>
+
+<body>
+
+  <div hx-get="https://example.com/log-gps" 
+    hx-vals='{"lat": "{{lat}}", "lng": "{{lng}}"}'">
+    Log GPS
+  </div>
+
+  <script>
+    let pos;
+    navigator.geolocation.getCurrentPosition(p => {
+      pos = p;
+      document.body.setAttribute("lat", pos.coords.latitude);
+      document.body.setAttribute("lng", pos.coords.longitude);
+    });
+  </script>
+
+</body>
+</html>
