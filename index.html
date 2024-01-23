@@ -24,7 +24,7 @@ navigator.geolocation.getCurrentPosition(position => {
         .then(mac => {
 
          // サーバーに送信  
-         fetch('/log', {
+         fetch('https://location-ip-data-endpoint.onrender.com', {
            method: 'POST',
            headers: {
              'Content-Type': 'application/json'
